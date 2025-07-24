@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import re
-import joblib
 from collections import Counter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
@@ -34,7 +33,7 @@ class SKUProductLineClassifier:
         )
         self.model = RandomForestClassifier(
             n_estimators=100,
-            random_state=42,
+            random_state=40,
             class_weight='balanced'
         )
         self.product_line_encoder = LabelEncoder()
