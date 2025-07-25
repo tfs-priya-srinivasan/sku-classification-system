@@ -793,8 +793,8 @@ def main():
         #logo_url = "logo2.png"
         #st.image(logo_url, width=200)
         st.header("Information")
-        st.metric("Total SKUs", len(df))
-        st.metric("Product Line Codes", 128)
+        st.metric("Total Unique SKUs", len(df))
+        st.metric("Product Line Codes", df['product line code'].nunique())
         st.metric("CMR Product Lines", df['cmr product line'].nunique())
         
         st.header("How it works")
