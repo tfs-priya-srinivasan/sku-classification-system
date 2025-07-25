@@ -55,13 +55,28 @@ def load_data():
         
         # Update CMR product line based on volume
         def extract_volume(sku_name):
-            match = re.search(r'(\d+)\s*L', sku_name.upper())
-            return int(match.group(1)) if match else None
-        
+            sku_name = sku_name.upper()
+
+            # Check for volume in Liters
+            match_l = re.search(r'(\d+)\s*L', sku_name)
+            if match_l:
+                return int(match_l.group(1))
+
+            # Check for volume in mL and convert to Liters
+            match_ml = re.search(r'(\d+)\s*M?ML', sku_name)
+            if match_ml:
+                ml = int(match_ml.group(1))
+                return ml / 1000  # Convert mL to L
+
+            return None
+            
         df['volume_l'] = df['sku name'].apply(extract_volume)
         
         def update_cmr_product_line(row):
             if row['cmr product line'] in ['2DBioProcessContainers', '3DBioProcessContainers']:
+                sku_name = str(row.get('sku_name', '')).lower()
+                if 'ml' in sku_name:
+                    return '2DBioProcessContainers'
                 if row['volume_l'] is not None:
                     return '2DBioProcessContainers' if row['volume_l'] <= 20 else '3DBioProcessContainers'
             return row['cmr product line']

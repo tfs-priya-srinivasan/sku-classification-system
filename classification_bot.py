@@ -642,20 +642,30 @@ def load_data():
         df['sku number'] = df['sku number'].str.replace(r'(INT_FINESS.*|BPD.*)', '', regex=True)
         # Extract volume and update CMR product line
         def extract_volume(sku_name):
-            match = re.search(r'(\d+)\s*L', sku_name.upper())
-            if match:
-                return int(match.group(1))
+            sku_name = sku_name.upper()
+
+            # Check for volume in Liters
+            match_l = re.search(r'(\d+)\s*L', sku_name)
+            if match_l:
+                return int(match_l.group(1))
+
+            # Check for volume in mL and convert to Liters
+            match_ml = re.search(r'(\d+)\s*M?ML', sku_name)
+            if match_ml:
+                ml = int(match_ml.group(1))
+                return ml / 1000  # Convert mL to L
+
             return None
         
         df['volume_l'] = df['sku name'].apply(extract_volume)
         
         def update_cmr_product_line(row):
             if row['cmr product line'] in ['2DBioProcessContainers', '3DBioProcessContainers']:
+                sku_name = str(row.get('sku_name', '')).lower()
+                if 'ml' in sku_name:
+                    return '2DBioProcessContainers'
                 if row['volume_l'] is not None:
-                    if row['volume_l'] <= 20:
-                        return '2DBioProcessContainers'
-                    else:
-                        return '3DBioProcessContainers'
+                    return '2DBioProcessContainers' if row['volume_l'] <= 20 else '3DBioProcessContainers'
             return row['cmr product line']
         
         df['cmr product line'] = df.apply(update_cmr_product_line, axis=1)
