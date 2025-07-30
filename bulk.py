@@ -33,7 +33,7 @@ def safe_dataframe_display(df, key=None):
 def load_data():
     """Load and preprocess the data"""
     try:
-        df = pd.read_excel('Training_Set.xlsx')
+        df = pd.read_excel(r'C:\\Users\\priya.srinivasan\\OneDrive - Thermo Fisher Scientific\\Documents\\Business Rule\\Training_Set.xlsx')
         
         # Clean data
         df = df[(df['sku number'].notna()) & (df['sku number'] != '') & 
