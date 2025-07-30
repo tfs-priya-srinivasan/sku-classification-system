@@ -17,7 +17,7 @@ os.environ['PYARROW_IGNORE_TIMEZONE'] = '1'
 def load_data():
     """Load and preprocess training data"""
     try:
-        df = pd.read_excel('Training_Set.xlsx')
+        df = pd.read_excel('Training_Set.xlsx', engine='openpyxl')
         
         # Clean data - remove empty rows
         df = df[(df['sku number'].notna()) & (df['sku number'] != '') & 
@@ -50,7 +50,7 @@ def load_data():
 def load_business_rules_data():
     """Load business rule book data"""
     try:
-        return pd.read_excel('Business_Rule.xlsx')
+        return pd.read_excel('Business_Rule.xlsx', engine='openpyxl')
     except Exception as e:
         st.error(f"Error loading Business Rule Book: {str(e)}")
         return None
