@@ -176,9 +176,14 @@ def get_product_line_name(product_line_code, is_2d=True):
         return mapping.get(product_line_code, 'PRODUCTAINER BPC')
 
 def adjust_product_line_for_volume(original_cmr, product_line_code, product_line_name, sku_name):
-    """Adjust product line code and name based on volume-determined CMR classification"""
+    """Adjust product line code and name based on volume-determined CMR classification and special rules"""
+    sku_name_upper = str(sku_name).upper() if sku_name else ""
+    # Special rule for "beta bag" or "needle"
+    if "BETA BAG" in sku_name_upper or "NEEDLE" in sku_name_upper:
+        return "2NK", "FF FILLING ASSEMBLIES", "FillFinish"
+
     if original_cmr not in ['2DBioProcessContainers', '3DBioProcessContainers']:
-        return product_line_code, product_line_name, original_cmr
+        return original_cmr
 
     correct_cmr = determine_correct_cmr_by_volume(sku_name, original_cmr)
 
