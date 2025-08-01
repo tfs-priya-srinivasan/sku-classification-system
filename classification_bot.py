@@ -665,7 +665,7 @@ def load_data():
                 if 'ml' in sku_name:
                     return '2DBioProcessContainers'
                 if row['volume_l'] is not None:
-                    return '2DBioProcessContainers' if row['volume_l'] <= 20 else '3DBioProcessContainers'
+                    return '2DBioProcessContainers' if row['volume_l'] <= 50 else '3DBioProcessContainers'
             return row['cmr product line']
         
         df['cmr product line'] = df.apply(update_cmr_product_line, axis=1)

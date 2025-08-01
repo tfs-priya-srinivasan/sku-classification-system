@@ -183,7 +183,7 @@ def adjust_product_line_for_volume(original_cmr, product_line_code, product_line
         return "2NK", "FF FILLING ASSEMBLIES", "FillFinish"
 
     if original_cmr not in ['2DBioProcessContainers', '3DBioProcessContainers']:
-        return original_cmr
+        return product_line_code, product_line_name, original_cmr  # <-- Always return 3 values
 
     correct_cmr = determine_correct_cmr_by_volume(sku_name, original_cmr)
 
