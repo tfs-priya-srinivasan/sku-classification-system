@@ -669,19 +669,10 @@ def main():
 
         st.header("🚀 How it works")
         st.markdown("""
-        1. **Volume Analysis**: Extracts volume from SKU names
-        2. **2D/3D Classification**: ≤20L=2D, >20L=3D  
-        3. **Exact Match**: Finds substring matches
-        4. **Fuzzy Search**: AI-powered similarity matching
-        5. **Code Mapping**: Auto-adjusts product line codes
-        """)
-
-        st.header("📋 Volume Rules")
-        st.info("""
-        **2D BioProcess Containers**: ≤ 20 Liters
-        **3D BioProcess Containers**: > 20 Liters
-        
-        System automatically maps product line codes based on extracted volume.
+        1. **Volume Analysis**: Extracts volume from SKU names 
+        2. **Exact Match**: Finds substring matches
+        3. **Fuzzy Search**: AI-powered similarity matching
+        4. **Code Mapping**: Auto-adjusts product line codes
         """)
 
         # Business rules download
