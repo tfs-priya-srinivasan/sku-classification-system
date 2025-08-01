@@ -107,7 +107,7 @@ def extract_volume_enhanced(sku_name):
     return None
 
 def determine_correct_cmr_by_volume(sku_name, original_cmr_line):
-    """Determine correct CMR product line based on 20L volume rule"""
+    """Determine correct CMR product line based on 50L volume rule"""
     if original_cmr_line not in ['2DBioProcessContainers', '3DBioProcessContainers']:
         return original_cmr_line
     
@@ -115,7 +115,7 @@ def determine_correct_cmr_by_volume(sku_name, original_cmr_line):
     if volume_l is None:
         return original_cmr_line
     
-    return '2DBioProcessContainers' if volume_l <= 20 else '3DBioProcessContainers'
+    return '2DBioProcessContainers' if volume_l <= 50 else '3DBioProcessContainers'
 
 def create_2d_to_3d_mapping():
     """
